@@ -29,6 +29,18 @@ router.put("/:id",(req,res)=>{
     task.title=req.body.title??task.title;
     task.completed=req.body.completed??task.completed;
     res.json(task);
+    
+});
+
+router.delete("/:id",(req,res)=>{
+    const taskId=parseInt(req.params.id);
+    const textIndex=tasks.findIndex(t=>t.id===taskId);
+    if(textIndex===-1){
+        return res.status(404).json({message:"Task not found"});
+
+    }
+    const deletedTask=tasks.splice(taskIndex,1);
+    res.json({message:"Task  deleted",task:deletedTask[0]});
 });
 
 module.exports = router;
