@@ -1,3 +1,4 @@
+//===== Task Routes =====
 const express = require("express");
 const router = express.Router();
 let tasks = [
@@ -23,7 +24,10 @@ router.put("/:id",(req,res)=>{
     const task= tasks.find(t=>t.id=== taskId);
     if(!task)
     {
-        return res.status(404).json({message:"Task not found "});
+        return res.status(404).json({
+        success:false,
+        message:"Task not found "
+    });
 
     }
     task.title=req.body.title??task.title;
