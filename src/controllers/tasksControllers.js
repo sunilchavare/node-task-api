@@ -11,11 +11,19 @@ exports.getTasks=(req,res)=>{
 };
 
 exports.createTask=(req,res)=>{
+    const  {title}=req.body;
+    if(!title||title.trim()===""){
+        return res.status(400).json({
+            sucess:false,
+            message:"Title is required"
+        });
+    }
     const newTask={
-        id:tasks.length+1,
-        title:req.body.title,
+        id:task.length+1,
+        title,
         completed:false
     };
+
     tasks.push(newTask);
     res.status(201).json({
         success:true,
@@ -33,8 +41,16 @@ exports.updateTask=(req,res)=>{
             message:"Task not found"
         });
     }
-    task.title=req.body.title ?? requestIdleCallback.title;
-    task.completed=req.bbody.completed ?? task.completed;
+    const {title,completed}=req.body;
+    if(title!==undefined  && title.trim()===" ")
+    {
+        return res.status(400).json({
+            success:false,
+            message:"Title cannot be empty"
+        });
+    }
+    task.title=title ?? task.title;
+    task.completed=completed ?? task.completed;
     res.json({
         success:true,
         data:task
